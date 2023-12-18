@@ -19,7 +19,15 @@ const FeedbackBar = ({incrementGood, incrementNeutral, incrementBad}) => {
 
 const StatisticsLine = ({text, value}) => {
   return(
-    <p>{text} {value}</p>
+    <tr> 
+      <td>
+        {text}
+      </td> 
+      <td>
+        {value}
+      </td>
+    </tr>
+    
   )
 }
 
@@ -39,15 +47,27 @@ const Statistics = ({good, neutral, bad}) => {
     return(
       <div>
         <h1>statistics</h1>
-        <StatisticsLine text="good" value={good} />
-        <StatisticsLine text="neutral" value={neutral} />
-        <StatisticsLine text="bad" value={bad} />
-        <StatisticsLine text="total" value={total} />
-        <StatisticsLine text="average" value={average} />
-        <StatisticsLine text="positive" value={String(positive) + '%'} />
+        <table>
+          <tbody>
+            <StatisticsLine text="good" value={good} />
+            <StatisticsLine text="neutral" value={neutral} />
+            <StatisticsLine text="bad" value={bad} />
+            <StatisticsLine text="total" value={total} />
+            <StatisticsLine text="average" value={average} />
+            <StatisticsLine text="positive" value={String(positive) + '%'} />
+          </tbody>
+        </table>
       </div>
     )
   }
+}
+
+const FeedbackButton = ({title, callback}) => {
+  return (
+    <button onClick={callback}>
+      {title}
+    </button>
+  )
 }
 
 const App = () => {
@@ -67,15 +87,9 @@ const App = () => {
     <div>
       <div>
         <h1>give feedback</h1>
-        <button onClick={feedbackIncreaser(good, setGood)}>
-          good
-        </button>
-        <button onClick={feedbackIncreaser(neutral, setNeutral)}>
-          neutral
-        </button>
-        <button onClick={feedbackIncreaser(bad, setBad)}>
-          bad
-        </button>
+        <FeedbackButton title='good' callback={feedbackIncreaser(good, setGood)}/>
+        <FeedbackButton title='neutral' callback={feedbackIncreaser(neutral, setNeutral)}/>
+        <FeedbackButton title='bad' callback={feedbackIncreaser(bad, setNeutral)}/>
       </div>
         <Statistics good={good} neutral={neutral} bad={bad} />
     </div>
