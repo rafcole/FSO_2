@@ -6,9 +6,49 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+const MostVoted = ({points, anecdotes}) => {
+  let highestVotedAnecdote = () => {
+    let maxNum = 0;
+    let maxIdx = null;
+
+    for(let i = 0; i < anecdotes.length; i += 1) {
+      if (points[i] > maxNum) {
+        maxNum = points[i]
+        maxIdx = i;
+      }
+    }
+
+    if (maxNum === 0) {
+      return ({noVotes: true})
+    } else {
+      return ({content: anecdotes[maxIdx], 
+      idx: maxIdx,
+      votes: points[maxIdx]})
+    }
+  }
+
+  let winner = highestVotedAnecdote()
+
+
+  if (winner.noVotes === true) {
+    return (
+      <div>
+        <h1>Anecdote with most votes</h1>
+        <p>No votes cast yet</p>
+      </div>
+    )
+  } else {
+    return (
+      <div>
+        <h1>Anecdote with most votes</h1>
+        <p>{winner.content}</p>
+        <p>{winner.votes} votes</p>
+      </div>
+    )
+  }
+}
 
 const App = () => {
-  useState
 
   const anecdotes = [
     'If it hurts, do it more often.',
@@ -34,9 +74,12 @@ const App = () => {
     return () => { setPoints(pointsCopy) }
   }
 
+
+
   console.log(points)
   return (
     <div>
+      <h1>Anecdote of the Day</h1>
       <p>{anecdotes[selected]}</p>
       <button onClick={incrementVote(selected)}>
         Vote
@@ -44,6 +87,7 @@ const App = () => {
       <button onClick={randomizeSelected}>
         Next anecdote
       </button>
+      <MostVoted points={points} selected={selected} anecdotes={anecdotes}/>
     </div>
   )
 }
