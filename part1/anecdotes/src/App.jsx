@@ -8,6 +8,8 @@ function getRandomInt(min, max) {
 
 
 const App = () => {
+  useState
+
   const anecdotes = [
     'If it hurts, do it more often.',
     'Adding manpower to a late software project makes it later!',
@@ -20,14 +22,25 @@ const App = () => {
   ]
    
   const [selected, setSelected] = useState(0)
+  const [points, setPoints] = useState(Array(10).fill(0))
 
   let randomizeSelected = () => {
     setSelected(getRandomInt(0, anecdotes.length -1));
   }
 
+  let incrementVote = (idx) => {
+    let pointsCopy = Array.from(points)
+    pointsCopy[idx] += 1
+    return () => { setPoints(pointsCopy) }
+  }
+
+  console.log(points)
   return (
     <div>
       <p>{anecdotes[selected]}</p>
+      <button onClick={incrementVote(selected)}>
+        Vote
+      </button>
       <button onClick={randomizeSelected}>
         Next anecdote
       </button>
