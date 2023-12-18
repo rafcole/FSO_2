@@ -1,18 +1,21 @@
-const Hello = (props) => {
-  return (
-    <div>
-      <p>Hello {props.name}, you are {props.age} years old</p>
-    </div>
-  )
-}
+import { useState } from 'react'
 
 const App = () => {
-  const friends = [ 'Peter', 'Maya']
+  const [ counter, setCounter ] = useState(0)
+
 
   return (
     <div>
-      <p>{friends}</p>
+      <div>{counter}</div>
+
+      <button onClick={() => setCounter(counter + 1)}>
+        plus
+      </button>
+      <button onClick={() => setCounter(0)}>
+        zero
+      </button>
     </div>
   )
 }
+
 export default App
